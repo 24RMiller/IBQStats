@@ -4,10 +4,10 @@
 }
 
 .header img {
-  max-width: 100%;
-  height: auto;
-  max-height: 200px;
-  object-fit: contain;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
 }
 
 .header h1 {
@@ -30,8 +30,6 @@
   border-radius: 6px;
 
   /* makes text readable on any image */
-  background: rgba(0, 0, 0, 0.45);
-  transition: 0.2s;
 }
 
 .nav a:hover {
