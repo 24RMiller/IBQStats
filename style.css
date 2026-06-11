@@ -1,6 +1,7 @@
 .header {
-  text-align: left;
-  margin-bottom: 20px;
+  position: relative;
+  width: 100%;
+  display: inline-block;
 }
 
 .header img {
@@ -8,6 +9,7 @@
   height: auto;
   max-height: 200px;
   object-fit: contain;
+  display: block;
 }
 
 .header h1 {
@@ -16,8 +18,9 @@
 
 .nav {
   position: absolute;
-  top: 10px;
+  top: 50%;
   right: 20px;
+  transform: translateY(-50%);
   display: flex;
   gap: 15px;
 }
