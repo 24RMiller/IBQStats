@@ -1,5 +1,5 @@
-const START_ROW = 3;
-const END_ROW = 16;
+const START_ROW = 73;
+const END_ROW = 86;
 
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
@@ -8,25 +8,19 @@ async function loadStats() {
   const res = await fetch(SHEET_URL);
   const text = await res.text();
 
-  const rows = text
-    .trim()
-    .split("\n")
-    .map(r => r.split(","));
+  const rows = text.trim().split("\n").map(r => r.split(","));
 
-  const BB = 53;
-  const BC = 54;
-  const BD = 55;
-
-  const data = rows
-    .slice(START_ROW - 1, END_ROW) // rows 3–16 correctly
+  // ✅ THIS correctly limits sheet rows 73–86
+  const data = rows.slice(START_ROW - 1, END_ROW)
     .map(row => ({
-      col1: row[BB],
-      col2: row[BC],
-      col3: Number(row[BD])
+      name: row[11],              // Column L
+      points: Number(row[12]),    // Column M
+      quizzes: Number(row[13])    // Column N
     }))
-    .filter(r => r.col1); // remove blanks
+    .filter(r => r.name); // remove blanks
 
-  data.sort((a, b) => b.col3 - a.col3);
+  // sort highest points first
+  data.sort((a, b) => b.points - a.points);
 
   render(data);
 }
@@ -35,21 +29,26 @@ function render(data) {
   document.getElementById("table").innerHTML = `
     <table>
       <tr>
-        <th>Column BB</th>
-        <th>Column BC</th>
-        <th>Column BD</th>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Points</th>
+        <th>Quizzes</th>
       </tr>
 
-      ${data.map(r => `
+      ${data.map((r, i) => `
         <tr>
-          <td>${r.col1}</td>
-          <td>${r.col2}</td>
-          <td>${r.col3}</td>
+          <td>${i + 1}</td>
+          <td>${r.name}</td>
+          <td>${r.points}</td>
+          <td>${r.quizzes}</td>
         </tr>
       `).join("")}
     </table>
   `;
 }
 
+// initial load
 loadStats();
+
+// auto-refresh every 60 seconds
 setInterval(loadStats, 60000);
