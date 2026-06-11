@@ -10,21 +10,15 @@ async function loadStats() {
 
   const rows = text.trim().split("\n").map(r => r.split(","));
 
-  let data = [];
-
-  for (let i = 0; i < rows.length; i++) {
-    const sheetRowNumber = i + 1; // CSV row 0 = sheet row 1
-
-    if (sheetRowNumber < START_ROW || sheetRowNumber > END_ROW) continue;
-
-    const row = rows[i];
-
-    data.push({
-      name: row[11],              // L
-      points: Number(row[12]),    // M
-      quizzes: Number(row[13])    // N
-    });
-  }
+  // ✅ THIS correctly limits sheet rows 73–86
+  const data = rows
+    .slice(START_ROW - 1, END_ROW)
+    .map(row => ({
+      name: row[11],              // Column L
+      points: Number(row[12]),    // Column M
+      quizzes: Number(row[13])    // Column N
+    }))
+    .filter(r => r.name); // remove blanks
 
   // sort highest points first
   data.sort((a, b) => b.points - a.points);
@@ -36,6 +30,7 @@ function render(data) {
   document.getElementById("table").innerHTML = `
     <table>
       <tr>
+        <th>Rank</th>
         <th>Name</th>
         <th>Points</th>
         <th>Quizzes</th>
@@ -43,6 +38,7 @@ function render(data) {
 
       ${data.map((r, i) => `
         <tr>
+          <td>${i + 1}</td>
           <td>${r.name}</td>
           <td>${r.points}</td>
           <td>${r.quizzes}</td>
