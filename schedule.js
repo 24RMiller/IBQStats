@@ -42,9 +42,6 @@ function render(data) {
             <td>${r.team3}</td>
           <td>${r.score3}</td>
         </tr>
-        <tr class="spacer">
-        <td colspan="7"></td>
-        </tr>
       `).join("")}
     </table>
   `;
