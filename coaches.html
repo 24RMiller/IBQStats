@@ -4,7 +4,16 @@
   <title>For Coaches</title>
   <link rel="stylesheet" href="style.css">
 </head>
+<script>
+  const password = "IBQ2026Coaches";
 
+  const input = prompt("Enter password to access this page:");
+
+  if (input !== password) {
+    document.write("Access denied");
+    window.stop();
+  }
+</script>
 <body>
 
 <header class="header">
