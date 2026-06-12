@@ -56,20 +56,20 @@
   height: 20px;
 }
 
-table {
+#scoreboard {
   border-collapse: collapse;
   width: 100%;
 }
 
 /* base cell styling */
-td {
+#scoreboard td {
   padding: 6px 10px;
   white-space: nowrap;
 }
 
 /* add controlled horizontal spacing AFTER specific columns */
-td:nth-child(2),
-td:nth-child(4),
-td:nth-child(6) {
+#scoreboard td:nth-child(2),
+#scoreboard td:nth-child(4),
+#scoreboard td:nth-child(6) {
   padding-left: 25px;
 }
