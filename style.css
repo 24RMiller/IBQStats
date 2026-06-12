@@ -58,7 +58,7 @@
 
 #scoreboard {
   border-collapse: collapse;
-  width: 100%;
+  width: max-content;
 }
 
 /* base cell styling */
