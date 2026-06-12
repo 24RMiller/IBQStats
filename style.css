@@ -55,3 +55,12 @@
 .blank-row td {
   height: 20px;
 }
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 6px; /* row spacing */
+}
+
+td {
+  padding: 6px 10px;
+}
