@@ -44,3 +44,14 @@
 .nav a:hover {
   text-decoration: underline;
 }
+
+.heading {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  background: #f2f2f2;
+}
+
+.blank-row td {
+  height: 20px;
+}
