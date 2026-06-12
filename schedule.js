@@ -30,7 +30,7 @@ async function loadStats() {
 
 function render(data) {
   document.getElementById("table").innerHTML = `
-    <table>
+    <table id="scoreboard">
 
       ${data.map((r, i) => `
         <tr>
