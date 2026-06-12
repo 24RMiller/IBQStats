@@ -31,15 +31,6 @@ async function loadStats() {
 function render(data) {
   document.getElementById("table").innerHTML = `
     <table>
-      <tr>
-        <th>time</th>
-        <th>team1</th>
-        <th>score1</th>
-        <th>team2</th>
-        <th>score2</th>
-        <th>team3</th>
-        <th>score3</th>
-      </tr>
 
       ${data.map((r, i) => `
         <tr>
@@ -50,6 +41,9 @@ function render(data) {
           <td>${r.score2}</td>
             <td>${r.team3}</td>
           <td>${r.score3}</td>
+        </tr>
+        <tr class="spacer">
+        <td colspan="7"></td>
         </tr>
       `).join("")}
     </table>
