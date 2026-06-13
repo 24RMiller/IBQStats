@@ -8,15 +8,22 @@ async function loadStats() {
   const res = await fetch(SHEET_URL);
   const text = await res.text();
 
-  const rows = text.trim().split("\n").map(r => r.split(","));
+  const rows = text
+    .trim()
+    .split("\n")
+    .map(r => r.split(","))
+    .filter(row => Array.isArray(row) && row.length > 1);
 
   // L → BA (11 → 53)
   const header = rows[0].slice(11, 53);
 
   const data = rows
     .slice(START_ROW, END_ROW)
-    .map(row => row.slice(11, 53))
-    .filter(row => row.some(cell => cell));
+    .map(row => {
+      if (!Array.isArray(row)) return [];
+      return row.slice(11, 53);
+    })
+    .filter(row => Array.isArray(row) && row.some(cell => cell && cell !== ""));
 
   render(header, data);
 }
@@ -24,15 +31,17 @@ async function loadStats() {
 function render(header, data) {
   const headerHTML = `
     <tr>
-      ${header.map(h => `<th>${h}</th>`).join("")}
+      ${header.map(h => `<th>${h ?? ""}</th>`).join("")}
     </tr>
   `;
 
-  const body = data.map(row => `
-    <tr>
-      ${row.map(cell => `<td>${cell ?? ""}</td>`).join("")}
-    </tr>
-  `).join("");
+  const body = data
+    .map(row => `
+      <tr>
+        ${row.map(cell => `<td>${cell ?? ""}</td>`).join("")}
+      </tr>
+    `)
+    .join("");
 
   document.getElementById("individual-stats").innerHTML = `
     <table>
