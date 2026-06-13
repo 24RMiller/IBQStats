@@ -73,3 +73,25 @@
 #scoreboard td:nth-child(6) {
   padding-left: 25px;
 }
+
+/* Individual stats table gridlines */
+#individual-stats table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#individual-stats table th,
+#individual-stats table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+#individual-stats table thead th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+#individual-stats table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
