@@ -28,11 +28,14 @@ async function loadStats() {
 function render(data) {
   document.getElementById("team-stats").innerHTML = `
     <table>
-      ${data.map(row => `
+      ${data.map(row => {
+        if (!Array.isArray(row)) return '';
+        return `
         <tr>
           ${row.map(cell => `<td>${cell ?? ""}</td>`).join("")}
         </tr>
-      `).join("")}
+      `;
+      }).join("")}
     </table>
   `;
 }
