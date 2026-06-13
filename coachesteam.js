@@ -1,5 +1,5 @@
-const START_ROW = 72;
-const END_ROW = 86;
+const START_ROWT = 72;
+const END_ROWT = 86;
 
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
@@ -11,7 +11,7 @@ async function loadStats() {
   const rows = text.trim().split("\n").map(r => r.split(","));
 
   const data = rows
-    .slice(START_ROW - 1, END_ROW)
+    .slice(START_ROWT - 1, END_ROWT)
     .map(row => row.slice(11, 26)) // L through Z
     .filter(row => row[0]); // remove blank names
 
