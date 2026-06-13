@@ -10,27 +10,34 @@ async function loadStats() {
 
   const rows = text.trim().split("\n").map(r => r.split(","));
 
-  const data = rows
-    .slice(START_ROW - 1, END_ROW)
-    .map(row => row.slice(11, 53)); // L through BA
+  // L → BA (11 → 53)
+  const header = rows[0].slice(11, 53);
 
-  render(data);
+  const data = rows
+    .slice(START_ROW, END_ROW)
+    .map(row => row.slice(11, 53))
+    .filter(row => row.some(cell => cell));
+
+  render(header, data);
 }
 
-function render(data) {
-  const numCols = 42; // L through BA
+function render(header, data) {
+  const headerHTML = `
+    <tr>
+      ${header.map(h => `<th>${h}</th>`).join("")}
+    </tr>
+  `;
 
   const body = data.map(row => `
     <tr>
-      ${row.map(cell => `<td>${cell}</td>`).join("")}
+      ${row.map(cell => `<td>${cell ?? ""}</td>`).join("")}
     </tr>
   `).join("");
 
   document.getElementById("individual-stats").innerHTML = `
     <table>
-      <tbody>
-        ${body}
-      </tbody>
+      <thead>${headerHTML}</thead>
+      <tbody>${body}</tbody>
     </table>
   `;
 }
