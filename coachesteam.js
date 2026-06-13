@@ -18,7 +18,8 @@ async function loadStats() {
     .slice(START_ROWT - 1, END_ROWT)
     .map(row => {
       if (!Array.isArray(row)) return [];
-      return row.slice(11, 26);
+      // Get columns 11-12 (indices 11-12) and 14-25 (indices 14-25), skipping column 13 (index 13)
+      return [...row.slice(11, 13), ...row.slice(14, 26)];
     })
     .filter(row => Array.isArray(row) && row.length > 0 && row[0]);
 
