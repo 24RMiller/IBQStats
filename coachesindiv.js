@@ -1,5 +1,5 @@
-const START_ROW = 1;
-const END_ROW = 70;
+const START_ROW = 88;
+const END_ROW = 156;
 
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
@@ -15,13 +15,13 @@ async function loadStats() {
     .filter(row => Array.isArray(row) && row.length > 1);
 
   // L → BA (11 → 53)
-  const header = rows[0].slice(11, 53);
+  const header = rows[0].slice(11, 25);
 
   const data = rows
     .slice(START_ROW, END_ROW)
     .map(row => {
       if (!Array.isArray(row)) return [];
-      return row.slice(11, 53);
+      return row.slice(11, 25);
     })
     .filter(row => Array.isArray(row) && row.some(cell => cell && cell !== ""));
 
@@ -29,11 +29,6 @@ async function loadStats() {
 }
 
 function render(header, data) {
-  const headerHTML = `
-    <tr>
-      ${header.map(h => `<th>${h ?? ""}</th>`).join("")}
-    </tr>
-  `;
 
   const body = data
     .map(row => `
@@ -45,7 +40,6 @@ function render(header, data) {
 
   document.getElementById("individual-stats").innerHTML = `
     <table>
-      <thead>${headerHTML}</thead>
       <tbody>${body}</tbody>
     </table>
   `;
