@@ -31,7 +31,7 @@ function render(data) {
     </tr>
   `).join("");
 
-  document.getElementById("individual.stats").innerHTML = `
+  document.getElementById("individual-stats").innerHTML = `
     <table>
       <thead>
         <tr>${headers}</tr>
