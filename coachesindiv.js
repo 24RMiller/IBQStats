@@ -1,4 +1,4 @@
-const START_ROW = 3;
+const START_ROW = 1;
 const END_ROW = 70;
 
 const SHEET_URL =
@@ -20,11 +20,6 @@ async function loadStats() {
 function render(data) {
   const numCols = 42; // L through BA
 
-  const headers = Array.from(
-    { length: numCols },
-    (_, i) => `<th>Col${i + 1}</th>`
-  ).join("");
-
   const body = data.map(row => `
     <tr>
       ${row.map(cell => `<td>${cell}</td>`).join("")}
@@ -33,9 +28,6 @@ function render(data) {
 
   document.getElementById("individual-stats").innerHTML = `
     <table>
-      <thead>
-        <tr>${headers}</tr>
-      </thead>
       <tbody>
         ${body}
       </tbody>
