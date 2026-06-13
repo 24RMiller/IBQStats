@@ -8,18 +8,24 @@ async function loadStats() {
   const res = await fetch(SHEET_URLT);
   const text = await res.text();
 
-  const rows = text.trim().split("\n").map(r => r.split(","));
+  const rows = text
+    .trim()
+    .split("\n")
+    .map(r => r.split(","))
+    .filter(row => Array.isArray(row) && row.length > 1);
 
   const data = rows
     .slice(START_ROWT - 1, END_ROWT)
-    .map(row => row.slice(11, 26)) // L through Z
-    .filter(row => row[0]); // remove blank names
+    .map(row => {
+      if (!Array.isArray(row)) return [];
+      return row.slice(11, 26);
+    })
+    .filter(row => Array.isArray(row) && row.length > 0 && row[0]);
 
   render(data);
 }
 
 function render(data) {
-
   document.getElementById("team-stats").innerHTML = `
     <table>
       ${data.map(row => `
