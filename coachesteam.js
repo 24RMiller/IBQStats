@@ -24,7 +24,7 @@ function render(data) {
     (_, i) => `<th>Stat ${i + 1}</th>`
   ).join("");
 
-  document.getElementById("table").innerHTML = `
+  document.getElementById("team-stats").innerHTML = `
     <table>
       <tr>${headers}</tr>
 
