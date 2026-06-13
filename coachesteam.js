@@ -1,4 +1,4 @@
-const START_ROW = 73;
+const START_ROW = 72;
 const END_ROW = 86;
 
 const SHEET_URL =
@@ -19,15 +19,9 @@ async function loadStats() {
 }
 
 function render(data) {
-  const headers = Array.from(
-    { length: 15 },
-    (_, i) => `<th>Stat ${i + 1}</th>`
-  ).join("");
 
   document.getElementById("team-stats").innerHTML = `
     <table>
-      <tr>${headers}</tr>
-
       ${data.map(row => `
         <tr>
           ${row.map(cell => `<td>${cell ?? ""}</td>`).join("")}
