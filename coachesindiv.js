@@ -4,7 +4,7 @@ const END_ROW = 156;
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
 
-async function loadStats() {
+async function loadIndivStats() {
   const res = await fetch(SHEET_URL);
   const text = await res.text();
 
@@ -25,10 +25,15 @@ async function loadStats() {
     })
     .filter(row => Array.isArray(row) && row.some(cell => cell && cell !== ""));
 
-  render(header, data);
+  renderIndiv(header, data);
 }
 
-function render(header, data) {
+function renderIndiv(header, data) {
+  const headerRow = `
+    <tr>
+      ${header.map(cell => `<th>${cell ?? ""}</th>`).join("")}
+    </tr>
+  `;
 
   const body = data
     .map(row => `
@@ -40,10 +45,11 @@ function render(header, data) {
 
   document.getElementById("individual-stats").innerHTML = `
     <table>
+      <thead>${headerRow}</thead>
       <tbody>${body}</tbody>
     </table>
   `;
 }
 
-loadStats();
-setInterval(loadStats, 60000);
+loadIndivStats();
+setInterval(loadIndivStats, 60000);
