@@ -25,7 +25,7 @@ async function loadRoster() {
     })
     .filter(row => Array.isArray(row) && row.some(cell => cell && cell !== ""));
 
-  renderIndiv(header, data);
+  ROSrender(header, data);
 }
 
 function ROSrender(header, data) {
