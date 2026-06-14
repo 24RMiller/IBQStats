@@ -41,6 +41,19 @@ function render(data) {
   `;
 }
 
+function toggleTeamStats() {
+  const table = document.getElementById("team-stats");
+  const btn = document.getElementById("toggle-team-btn");
+  
+  if (table.style.display === "none") {
+    table.style.display = "block";
+    btn.textContent = "▼ Team Stats";
+  } else {
+    table.style.display = "none";
+    btn.textContent = "► Team Stats";
+  }
+}
+
 // initial load
 loadStats();
 
