@@ -51,5 +51,19 @@ function renderIndiv(header, data) {
   `;
 }
 
+function toggleIndividualStats() {
+  const section = document.querySelector(".individual-section");
+  const table = document.getElementById("individual-stats");
+  const btn = document.getElementById("toggle-individual-btn");
+  
+  if (table.style.display === "none") {
+    table.style.display = "block";
+    btn.textContent = "▼ Individual Stats";
+  } else {
+    table.style.display = "none";
+    btn.textContent = "► Individual Stats";
+  }
+}
+
 loadIndivStats();
 setInterval(loadIndivStats, 60000);
