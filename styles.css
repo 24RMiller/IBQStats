@@ -1,0 +1,22 @@
+#rosters table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
+
+#rosters th,
+#rosters td {
+  border: 1px solid #333;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+#rosters th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+#rosters tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
