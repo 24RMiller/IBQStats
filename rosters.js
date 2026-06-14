@@ -15,7 +15,7 @@ async function loadRoster() {
     .filter(row => Array.isArray(row) && row.length > 1);
 
   // L → BA (11 → 53)
-  const header = rows[1].slice(0, 8);
+  const header = rows[0].slice(0, 8);
 
   const data = rows
     .slice(ROS_START_ROW, ROS_END_ROW)
