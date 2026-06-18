@@ -1,23 +1,51 @@
 const DOC_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?gid=1204008329&single=true&output=csv";
 
+const ROS_SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?gid=2087095678&single=true&output=csv";
+
+const eventDates = [
+  "July 13",
+  "July 14",
+  "July 15",
+  "July 16",
+  "July 17",
+  "July 18"
+];
+
+/* -----------------------------
+   SAFE CSV PARSER
+----------------------------- */
+function parseCSV(text) {
+  return text
+    .trim()
+    .split("\n")
+    .map(r => r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/));
+}
+
+/* -----------------------------
+   SCHEDULE
+----------------------------- */
 async function loadSchedule() {
   const res = await fetch(DOC_URL);
   const text = await res.text();
 
-const rows = text
-  .trim()
-  .split("\n")
-  .map(r => r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/));
+  const rows = parseCSV(text);
 
-  const eventDates = ["July 13", "July 14", "July 15", "July 16", "July 17", "July 18"];
-  
   const body = rows
+    .slice(0, 59)
     .map(row => {
-      const firstCell = row.split(",")[0] ?? "";
-      const isEventDate = eventDates.some(date => firstCell.includes(date));
-      const cellClass = isEventDate ? 'style="font-weight: bold; text-align: center;"' : "";
-      return `<tr><td ${cellClass}>${firstCell}</td></tr>`;
+      const firstCell = row[0] ?? "";
+
+      const isEventDate = eventDates.some(date =>
+        firstCell.includes(date)
+      );
+
+      const style = isEventDate
+        ? 'style="font-weight:bold; text-align:center;"'
+        : "";
+
+      return `<tr><td ${style}>${firstCell}</td></tr>`;
     })
     .join("");
 
@@ -28,45 +56,32 @@ const rows = text
   `;
 }
 
-loadSchedule();
-setInterval(loadSchedule, 60000);
-
-
+/* -----------------------------
+   ROSTERS
+----------------------------- */
 const ROS_START_ROW = 1;
 const ROS_END_ROW = 15;
-
-const ROS_SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?gid=2087095678&single=true&output=csv";
 
 async function loadRoster() {
   const res = await fetch(ROS_SHEET_URL);
   const text = await res.text();
 
-  const rows = text
-    .trim()
-    .split("\n")
-    .map(r => r.split(","))
-    .filter(row => Array.isArray(row) && row.length > 1);
+  const rows = parseCSV(text).filter(r => r.length > 1);
 
-  // L → BA (11 → 53)
-const header = rows[0]
-  .slice(0, 9)
-  .filter((_, i) => i !== 1); // remove 2nd column
+  const cleanRow = row =>
+    row.slice(0, 9).filter((_, i) => i !== 1); // remove 2nd column
+
+  const header = cleanRow(rows[0] || []);
 
   const data = rows
     .slice(ROS_START_ROW, ROS_END_ROW)
-    .map(row => {
-      if (!Array.isArray(row)) return [];
-  return row
-  .slice(0, 9)
-  .filter((_, i) => i !== 1); // remove 2nd column
-    })
-    .filter(row => Array.isArray(row) && row.some(cell => cell && cell !== ""));
+    .map(cleanRow)
+    .filter(row => row.some(cell => cell && cell !== ""));
 
-  ROSrender(header, data);
+  renderRoster(header, data);
 }
 
-function ROSrender(header, data) {
+function renderRoster(header, data) {
   const headerRow = `
     <tr>
       ${header.map(cell => `<th>${cell ?? ""}</th>`).join("")}
@@ -89,6 +104,13 @@ function ROSrender(header, data) {
   `;
 }
 
-
+/* -----------------------------
+   INIT
+----------------------------- */
+loadSchedule();
 loadRoster();
-setInterval(loadRoster, 60000);
+
+setInterval(() => {
+  loadSchedule();
+  loadRoster();
+}, 60000);
