@@ -14,13 +14,10 @@ const eventDates = [
 ];
 
 /* -----------------------------
-   SAFE CSV PARSER
+   CSV PARSER (ROBUST)
 ----------------------------- */
 function parseCSV(text) {
-  return text
-    .trim()
-    .split("\n")
-    .map(r => r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/));
+  return Papa.parse(text.trim()).data;
 }
 
 /* -----------------------------
@@ -69,7 +66,7 @@ async function loadRoster() {
   const rows = parseCSV(text).filter(r => r.length > 1);
 
   const cleanRow = row =>
-    row.slice(0, 9).filter((_, i) => i !== 1); // remove 2nd column
+    row.slice(0, 9).filter((_, i) => i !== 1);
 
   const header = cleanRow(rows[0] || []);
 
