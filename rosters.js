@@ -1,19 +1,14 @@
 const DOC_URL =
-  "https://docs.google.com/document/d/e/2PACX-1vQP-e3dRAlWtRCtupUiwjifX7Lg0dDC0pHE09KY7U9yct7BG1HILvy_7zhr4CCZ3tS45XluGVKSB2bY/pub";
+  "https://docs.google.com/document/d/e/2PACX-1vQP-e3dRAlWtRCtupUiwjifX7Lg0dDC0pHE09KY7U9yct7BG1HILvy_7zhr4CCZ3tS45XluGVKSB2bY/pub?output=txt";
 
-async function loadDoc() {
+async function loadAnnouncement() {
   const res = await fetch(DOC_URL);
-  const html = await res.text();
+  const text = await res.text();
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-
-  const content = doc.querySelector("body");
-
-  document.getElementById("announcement").innerHTML = content.innerHTML;
+  document.getElementById("announcement").textContent = text;
 }
 
-loadDoc();
+loadAnnouncement();
 
 const ROS_START_ROW = 1;
 const ROS_END_ROW = 15;
