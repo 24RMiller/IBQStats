@@ -3,9 +3,13 @@ const DOC_URL =
 
 async function loadDoc() {
   const res = await fetch(DOC_URL);
-  const text = await res.text();
+  const html = await res.text();
 
-  document.getElementById("announcement").textContent = text;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+
+  document.getElementById("announcement").innerHTML =
+    doc.querySelector("body").innerHTML;
 }
 
 loadDoc();
