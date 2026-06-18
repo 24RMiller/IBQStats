@@ -1,5 +1,5 @@
 const DOC_URL =
-  "https://docs.google.com/document/d/e/2PACX-1vQP-e3dRAlWtRCtupUiwjifX7Lg0dDC0pHE09KY7U9yct7BG1HILvy_7zhr4CCZ3tS45XluGVKSB2bY/pub?output=txt";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?gid=1204008329&single=true&output=csv";
 
 async function loadAnnouncement() {
   const res = await fetch(DOC_URL);
