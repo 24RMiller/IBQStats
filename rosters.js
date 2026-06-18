@@ -5,10 +5,10 @@ async function loadSchedule() {
   const res = await fetch(DOC_URL);
   const text = await res.text();
 
-  const rows = text
-    .trim()
-    .split("\n")
-    .slice(0, 59); // First 59 rows
+const rows = text
+  .trim()
+  .split("\n")
+  .map(r => r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/));
 
   const eventDates = ["July 13", "July 14", "July 15", "July 16", "July 17", "July 18"];
   
