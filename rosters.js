@@ -31,19 +31,6 @@ async function loadSchedule() {
 loadSchedule();
 setInterval(loadSchedule, 60000);
 
-async function loadAnnouncement() {
-  const res = await fetch(DOC_URL);
-  const html = await res.text();
-
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-
-  const text = doc.querySelector("#contents")?.innerText
-    || doc.body.innerText;
-
-  document.getElementById("announcement").textContent = text;
-}
-loadAnnouncement();
 
 const ROS_START_ROW = 1;
 const ROS_END_ROW = 15;
