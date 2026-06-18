@@ -15,13 +15,17 @@ async function loadRoster() {
     .filter(row => Array.isArray(row) && row.length > 1);
 
   // L → BA (11 → 53)
-  const header = rows[0].slice(0, 9);
+const header = rows[0]
+  .slice(0, 9)
+  .filter((_, i) => i !== 1); // remove 2nd column
 
   const data = rows
     .slice(ROS_START_ROW, ROS_END_ROW)
     .map(row => {
       if (!Array.isArray(row)) return [];
-      return row.slice(0, 9);
+  return row
+  .slice(0, 9)
+  .filter((_, i) => i !== 1); // remove 2nd column
     })
     .filter(row => Array.isArray(row) && row.some(cell => cell && cell !== ""));
 
