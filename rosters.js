@@ -1,6 +1,36 @@
 const DOC_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?gid=1204008329&single=true&output=csv";
 
+async function loadSchedule() {
+  const res = await fetch(DOC_URL);
+  const text = await res.text();
+
+  const rows = text
+    .trim()
+    .split("\n")
+    .slice(0, 59); // First 59 rows
+
+  const eventDates = ["July 13", "July 14", "July 15", "July 16", "July 17", "July 18"];
+  
+  const body = rows
+    .map(row => {
+      const firstCell = row.split(",")[0] ?? "";
+      const isEventDate = eventDates.some(date => firstCell.includes(date));
+      const cellClass = isEventDate ? 'style="font-weight: bold; text-align: center;"' : "";
+      return `<tr><td ${cellClass}>${firstCell}</td></tr>`;
+    })
+    .join("");
+
+  document.getElementById("schedule").innerHTML = `
+    <table>
+      <tbody>${body}</tbody>
+    </table>
+  `;
+}
+
+loadSchedule();
+setInterval(loadSchedule, 60000);
+
 async function loadAnnouncement() {
   const res = await fetch(DOC_URL);
   const html = await res.text();
