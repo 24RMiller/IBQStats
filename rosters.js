@@ -8,8 +8,9 @@ async function loadDoc() {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
 
-  document.getElementById("announcement").innerHTML =
-    doc.querySelector("body").innerHTML;
+  const content = doc.querySelector("body");
+
+  document.getElementById("announcement").innerHTML = content.innerHTML;
 }
 
 loadDoc();
