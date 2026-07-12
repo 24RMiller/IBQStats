@@ -10,16 +10,18 @@ async function loadStats() {
 
   const rows = text.trim().split("\n").map(r => r.split(","));
 
-  // ✅ THIS correctly limits sheet rows 73–86
   const data = rows.slice(START_ROW - 1, END_ROW)
     .map(row => ({
       time: row[0],
       team1: row[2],
-      score1: row[3],
-      team2: row[5],
-      score2: row[6],
-      team3: row[8],
-      score3: row[9],
+      tteam1: row[3],
+      score1: row[4],
+      team2: row[6],
+      tteam2: row[7]
+      score2: row[8],
+      team3: row[10],
+      tteam3: row[11]
+      score3: row[12],
       
   
     }))
@@ -36,10 +38,13 @@ function render(data) {
         <tr>
           <td>${r.time}</td>
           <td>${r.team1}</td>
+          <td>${r.tteam1}</td>
           <td>${r.score1}</td>
           <td>${r.team2}</td>
+          <td>${r.tteam2}</td>
           <td>${r.score2}</td>
             <td>${r.team3}</td>
+            <td>${r.tteam3}</td>
           <td>${r.score3}</td>
         </tr>
       `).join("")}
