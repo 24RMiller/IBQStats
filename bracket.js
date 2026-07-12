@@ -17,10 +17,10 @@ async function loadStats() {
       tteam1: row[3],
       score1: row[4],
       team2: row[6],
-      tteam2: row[7]
+      tteam2: row[7],
       score2: row[8],
       team3: row[10],
-      tteam3: row[11]
+      tteam3: row[11],
       score3: row[12],
       
   
