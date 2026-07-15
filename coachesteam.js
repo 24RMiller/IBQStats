@@ -6,7 +6,17 @@ const SHEET_URLT =
 
 async function loadStats() {
   try {
-    const res = await fetch(SHEET_URLT + "&t=" + Date.now(), { cache: "no-store", mode: "cors" });
+    const cacheBuster = Date.now() + Math.random();
+    const url = SHEET_URLT + `&cachebust=${cacheBuster}`;
+    
+    const res = await fetch(url, { 
+      cache: "no-store", 
+      mode: "cors",
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
+      }
+    });
     if (!res.ok) {
       console.warn("Failed to fetch sheet:", res.status, res.statusText);
       return;
