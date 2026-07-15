@@ -24,7 +24,15 @@ function parseCSV(text) {
    SCHEDULE
 ----------------------------- */
 async function loadSchedule() {
-  const res = await fetch(DOC_URL);
+  const cacheBuster = Date.now() + Math.random();
+  const url = DOC_URL + `&cachebust=${cacheBuster}`;
+  
+  const res = await fetch(url, {
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache'
+    }
+  });
   const text = await res.text();
 
   const rows = parseCSV(text);
@@ -60,7 +68,15 @@ const ROS_START_ROW = 1;
 const ROS_END_ROW = 15;
 
 async function loadRoster() {
-  const res = await fetch(ROS_SHEET_URL);
+  const cacheBuster = Date.now() + Math.random();
+  const url = ROS_SHEET_URL + `&cachebust=${cacheBuster}`;
+  
+  const res = await fetch(url, {
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache'
+    }
+  });
   const text = await res.text();
 
   const rows = parseCSV(text).filter(r => r.length > 1);
