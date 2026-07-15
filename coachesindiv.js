@@ -5,7 +5,7 @@ const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
 
 async function loadIndivStats() {
-  const res = await fetch(SHEET_URL);
+  const res = await fetch(SHEET_URL + "&t=" + Date.now());
   const text = await res.text();
 
   const rows = text
