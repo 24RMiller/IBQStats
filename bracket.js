@@ -1,35 +1,47 @@
 const START_ROW = 1;
 const END_ROW = 68;
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzt9WZGlDY5oVAlEqGQ5V2Ovw5XAEz3GyfaueVvXA7kbxOYKtPu5xNYhS5xYNa98xW60g/exec";
+const SHEET_URL =
+ "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?gid=1108802737&single=true&output=csv";
 
 async function loadStats() {
   const cacheBuster = Date.now() + Math.random();
+  const url = SHEET_URL + `&cachebust=${cacheBuster}`;
   
-  try {
-    const res = await fetch(SCRIPT_URL, {
-      method: 'GET',
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache'
-      }
-    });
-    
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+  const res = await fetch(url, {
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache'
     }
-    
-    const data = await res.json();
-    render(data);
-  } catch (error) {
-    console.error('Error loading stats:', error);
-    document.getElementById("table").innerHTML = '<p>Error loading data</p>';
-  }
+  });
+  const text = await res.text();
+
+  const rows = text.trim().split("\n").map(r => r.split(","));
+
+  const data = rows.slice(START_ROW - 1, END_ROW)
+    .map(row => ({
+      time: row[0],
+      team1: row[2],
+      tteam1: row[3],
+      score1: row[4],
+      team2: row[6],
+      tteam2: row[7],
+      score2: row[8],
+      team3: row[10],
+      tteam3: row[11],
+      score3: row[12],
+      
+  
+    }))
+
+
+  render(data);
 }
 
 function render(data) {
   document.getElementById("table").innerHTML = `
     <table id="scoreboard">
+
       ${data.map((r, i) => `
         <tr>
           <td>${r.time}</td>
@@ -39,8 +51,8 @@ function render(data) {
           <td>${r.team2}</td>
           <td>${r.tteam2}</td>
           <td>${r.score2}</td>
-          <td>${r.team3}</td>
-          <td>${r.tteam3}</td>
+            <td>${r.team3}</td>
+            <td>${r.tteam3}</td>
           <td>${r.score3}</td>
         </tr>
       `).join("")}
@@ -51,5 +63,5 @@ function render(data) {
 // initial load
 loadStats();
 
-// auto-refresh every 180 seconds
+// auto-refresh every 60 seconds
 setInterval(loadStats, 180000);
