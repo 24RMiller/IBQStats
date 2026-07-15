@@ -74,4 +74,4 @@ function toggleIndividualStats() {
 }
 
 loadIndivStats();
-setInterval(loadIndivStats, 600000);
+setInterval(loadIndivStats, 60000);
