@@ -66,4 +66,4 @@ function toggleIndividualStats() {
 }
 
 loadIndivStats();
-setInterval(loadIndivStats, 60000);
+setInterval(loadIndivStats, 600000);
