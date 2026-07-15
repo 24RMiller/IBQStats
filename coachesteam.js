@@ -5,25 +5,33 @@ const SHEET_URLT =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
 
 async function loadStats() {
-  const res = await fetch(SHEET_URLT + "&t=" + Date.now());
-  const text = await res.text();
+  try {
+    const res = await fetch(SHEET_URLT + "&t=" + Date.now(), { cache: "no-store", mode: "cors" });
+    if (!res.ok) {
+      console.warn("Failed to fetch sheet:", res.status, res.statusText);
+      return;
+    }
+    const text = await res.text();
 
-  const rows = text
-    .trim()
-    .split("\n")
-    .map(r => r.split(","))
-    .filter(row => Array.isArray(row) && row.length > 1);
+    const rows = text
+      .trim()
+      .split("\n")
+      .map(r => r.split(","))
+      .filter(row => Array.isArray(row) && row.length > 1);
 
-  const data = rows
-    .slice(START_ROWT - 1, END_ROWT)
-    .map(row => {
-      if (!Array.isArray(row)) return [];
-      // Get columns 11-12 (indices 11-12) and 14-25 (indices 14-25), skipping column 13 (index 13)
-      return [...row.slice(11, 13), ...row.slice(14, 26)];
-    })
-    .filter(row => Array.isArray(row) && row.length > 0 && row[0]);
+    const data = rows
+      .slice(START_ROWT - 1, END_ROWT)
+      .map(row => {
+        if (!Array.isArray(row)) return [];
+        // Get columns 11-12 (indices 11-12) and 14-25 (indices 14-25), skipping column 13 (index 13)
+        return [...row.slice(11, 13), ...row.slice(14, 26)];
+      })
+      .filter(row => Array.isArray(row) && row.length > 0 && row[0]);
 
-  render(data);
+    render(data);
+  } catch (err) {
+    console.error("Error loading stats:", err);
+  }
 }
 
 function render(data) {
@@ -58,4 +66,4 @@ function toggleTeamStats() {
 loadStats();
 
 // auto-refresh every 60 seconds
-setInterval(loadStats, 600000);
+setInterval(loadStats, 60000);
