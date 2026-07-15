@@ -66,4 +66,4 @@ function toggleTeamStats() {
 loadStats();
 
 // auto-refresh every 60 seconds
-setInterval(loadStats, 600);
+setInterval(loadStats, 60000);
