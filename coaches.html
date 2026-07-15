@@ -4,6 +4,7 @@
   <title>For Coaches</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <script>
   const password = "IBQ2026Coaches";
 
@@ -14,29 +15,39 @@
     window.stop();
   }
 </script>
+
 <body>
 
+<div class="update-notice">
+  If stats are not updated, try refreshing the page. If they still do not update, use this link:
+  <a href="https://docs.google.com/spreadsheets/d/1c2YsjSF29hRH_k_rX85gXpFylJCLTJN9jUk6wmj_cBE/edit?usp=sharing" target="_blank">
+    Stats Spreadsheet
+  </a>
+</div>
+
 <header class="header">
-<img src="header.png">
+  <img src="header.png">
   <nav class="nav">
-  <a href="index.html">Schedule</a>
-  <a href="bracket.html">Bracket</a>
-  <a href="teamstats.html">Team Stats</a>
-  <a href="individual.html">Individual Stats</a>
-  <a href=info.html>Other Information</a>
-  <a href="coaches.html">For Coaches</a>
-</nav>
-<h1>For Coaches</h1>
+    <a href="index.html">Schedule</a>
+    <a href="bracket.html">Bracket</a>
+    <a href="teamstats.html">Team Stats</a>
+    <a href="individual.html">Individual Stats</a>
+    <a href="info.html">Other Information</a>
+    <a href="coaches.html">For Coaches</a>
+  </nav>
+  <h1>For Coaches</h1>
 </header>
 
 <div class="section-header">
   <button id="toggle-individual-btn" class="toggle-btn" onclick="toggleIndividualStats()">▼ Individual Stats</button>
 </div>
+
 <div id="individual-stats">Loading...</div>
 
 <div class="section-header">
   <button id="toggle-team-btn" class="toggle-btn" onclick="toggleTeamStats()">▼ Team Stats</button>
 </div>
+
 <div id="team-stats">Loading...</div>
 
 <script src="coachesindiv.js?v=1"></script>
