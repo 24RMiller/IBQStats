@@ -34,7 +34,10 @@ async function loadStats() {
       .map(row => {
         if (!Array.isArray(row)) return [];
         // Get columns 11-12 (indices 11-12) and 14-25 (indices 14-25), skipping column 13 (index 13)
-        return [...row.slice(0, 15)];
+        const fullRow = [...row.slice(0, 15)];
+        // Remove 3rd column (index 2)
+        fullRow.splice(2, 1);
+        return fullRow;
       })
       .filter(row => Array.isArray(row) && row.length > 0 && row[0]);
 
