@@ -1,8 +1,8 @@
-const START_ROWT = 72;
-const END_ROWT = 86;
+const START_ROWT = 1;
+const END_ROWT = 15;
 
 const SHEET_URLT =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQa5Yhm_IQfR71GK8ILUTaNPk_YcDA1LEA75bdhkBTKQmrF_1vDcUVQ-XrwOkgP94ieJGzAN7bxglVE/pub?output=csv";
 
 async function loadStats() {
   try {
@@ -34,7 +34,7 @@ async function loadStats() {
       .map(row => {
         if (!Array.isArray(row)) return [];
         // Get columns 11-12 (indices 11-12) and 14-25 (indices 14-25), skipping column 13 (index 13)
-        return [...row.slice(11, 13), ...row.slice(14, 26)];
+        return [...row.slice(0, 15];
       })
       .filter(row => Array.isArray(row) && row.length > 0 && row[0]);
 
