@@ -1,8 +1,8 @@
-const START_ROW = 88;
-const END_ROW = 156;
+const START_ROW = 17;
+const END_ROW = 84;
 
 const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQa5Yhm_IQfR71GK8ILUTaNPk_YcDA1LEA75bdhkBTKQmrF_1vDcUVQ-XrwOkgP94ieJGzAN7bxglVE/pub?output=csv";
 
 async function loadIndivStats() {
   const cacheBuster = Date.now() + Math.random();
@@ -23,13 +23,13 @@ async function loadIndivStats() {
     .filter(row => Array.isArray(row) && row.length > 1);
 
   // L → BA (11 → 53)
-  const header = rows[87].slice(11, 28);
+  const header = rows[16].slice(1, 18);
 
   const data = rows
     .slice(START_ROW, END_ROW)
     .map(row => {
       if (!Array.isArray(row)) return [];
-      return row.slice(11, 28);
+      return row.slice(1, 18);
     })
     .filter(row => Array.isArray(row) && row.some(cell => cell && cell !== ""));
 
