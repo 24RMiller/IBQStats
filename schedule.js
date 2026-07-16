@@ -2,7 +2,7 @@ const START_ROW = 1;
 const END_ROW = 126;
 
 const SHEET_URL =
- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?gid=1864713106&single=true&output=csv";
+ "https://docs.google.com/spreadsheets/d/e/2PACX-1vT0Bkhub7sC2K9gDyoFG8uJ4NWL-K4B0UZGyXle5z9BUk7O6tUJtxSBS0Rnez2L095Pc_TRFJntRBXu/pub?output=csv";
 
 async function loadStats() {
   const cacheBuster = Date.now() + Math.random();
