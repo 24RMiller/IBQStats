@@ -23,13 +23,13 @@ async function loadIndivStats() {
     .filter(row => Array.isArray(row) && row.length > 1);
 
   // L → BA (11 → 53)
-  const header = rows[16].slice(1, 18);
+  const header = rows[16].slice(0, 18);
 
   const data = rows
     .slice(START_ROW, END_ROW)
     .map(row => {
       if (!Array.isArray(row)) return [];
-      return row.slice(1, 18);
+      return row.slice(0, 18);
     })
     .filter(row => Array.isArray(row) && row.some(cell => cell && cell !== ""));
 
