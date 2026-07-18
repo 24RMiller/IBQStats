@@ -1,5 +1,5 @@
-const START_ROW = 1;
-const END_ROW = 67;
+const START_ROW = 2;
+const END_ROW = 68;
 
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvAMMXea3QobsCRogjKwvEjQfqyZfeWStGqXQfOAvMCRMh54JhtgGJnWyloyCgXIxXc8A6W4eGPe8k/pub?output=csv";
@@ -18,13 +18,13 @@ async function loadStats() {
 
   const rows = text.trim().split("\n").map(r => r.split(","));
 
-  // ✅ THIS correctly limits sheet rows 73–86
+  // ✅ THIS correctly limits sheet rows 2–68
   const data = rows.slice(START_ROW - 1, END_ROW)
     .map(row => ({
-      name: row[1],              // Column L
-      points: Number(row[2]),    // Column M
-      quizzes: Number(row[3]),   // Column N
-      accuracy: Number(row[6])
+      name: row[1],              // Column B
+      points: Number(row[2]),    // Column C
+      quizzes: Number(row[3]),   // Column D
+      accuracy: Number(row[6])   // Column G
     }))
     .filter(r => r.name); // remove blanks
 
