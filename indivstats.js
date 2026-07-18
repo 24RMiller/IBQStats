@@ -21,10 +21,11 @@ async function loadStats() {
   // ✅ THIS correctly limits sheet rows 2–68
   const data = rows.slice(START_ROW - 1, END_ROW)
     .map(row => ({
+      position: row[0],
       name: row[1],              // Column B
-      points: Number(row[2]),    // Column C
-      quizzes: Number(row[3]),   // Column D
-      accuracy: Number(row[6])   // Column G
+      points: (row[2]),    // Column C
+      quizzes: (row[3]),   // Column D
+      accuracy: (row[6])   // Column G
     }))
     .filter(r => r.name); // remove blanks
 
@@ -46,7 +47,7 @@ function render(data) {
 
       ${data.map((r, i) => `
         <tr>
-          <td>${i + 1}</td>
+          <td>${r.position}</td>
           <td>${r.name}</td>
           <td>${r.points}</td>
           <td>${r.quizzes}</td>
