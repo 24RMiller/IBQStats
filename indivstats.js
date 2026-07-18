@@ -23,6 +23,7 @@ async function loadStats() {
     .map(row => ({
       position: row[0],
       name: row[1],              // Column B
+      team: row[2],
       points: (row[3]),    // Column C
       accuracy: (row[6])   // Column G
     }))
@@ -39,6 +40,7 @@ function render(data) {
       <tr>
         <th>Rank</th>
         <th>Name</th>
+        <th>Team</th>
         <th>Points</th>
         <th>Accuracy</th>
       </tr>
@@ -47,6 +49,7 @@ function render(data) {
         <tr>
           <td>${r.position}</td>
           <td>${r.name}</td>
+          <td>${r.team}</td>
           <td>${r.points}</td>
           <td>${r.accuracy}</td>
         </tr>
