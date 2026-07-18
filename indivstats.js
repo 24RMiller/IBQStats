@@ -1,8 +1,8 @@
-const START_ROW = 3;
-const END_ROW = 70;
+const START_ROW = 1;
+const END_ROW = 67;
 
 const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxrVRVkdMhenEIf_MA6dfUbDmMh_RIV5sLtaELe4dJHqvfDFO_FX-sSDEniujhf2tsD3y731Y4KDdt/pub?output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvAMMXea3QobsCRogjKwvEjQfqyZfeWStGqXQfOAvMCRMh54JhtgGJnWyloyCgXIxXc8A6W4eGPe8k/pub?output=csv";
 
 async function loadStats() {
   const cacheBuster = Date.now() + Math.random();
@@ -21,14 +21,14 @@ async function loadStats() {
   // ✅ THIS correctly limits sheet rows 73–86
   const data = rows.slice(START_ROW - 1, END_ROW)
     .map(row => ({
-      name: row[11],              // Column L
-      points: Number(row[12]),    // Column M
-      quizzes: Number(row[52])    // Column N
+      name: row[1],              // Column L
+      points: Number(row[2]),    // Column M
+      quizzes: Number(row[3]),   // Column N
+      accuracy: Number(row[6])
     }))
     .filter(r => r.name); // remove blanks
 
   // sort highest points first
-  data.sort((a, b) => b.points - a.points);
 
   render(data);
 }
@@ -41,6 +41,7 @@ function render(data) {
         <th>Name</th>
         <th>Points</th>
         <th>Quizzes</th>
+        <th>Accuracy</th>
       </tr>
 
       ${data.map((r, i) => `
@@ -49,6 +50,7 @@ function render(data) {
           <td>${r.name}</td>
           <td>${r.points}</td>
           <td>${r.quizzes}</td>
+          <td>${r.accuracy}</td>
         </tr>
       `).join("")}
     </table>
@@ -59,4 +61,4 @@ function render(data) {
 loadStats();
 
 // auto-refresh every 60 seconds
-setInterval(loadStats, 60000);
+setInterval(loadStats, 60000000);
