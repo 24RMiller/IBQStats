@@ -23,8 +23,7 @@ async function loadStats() {
     .map(row => ({
       position: row[0],
       name: row[1],              // Column B
-      points: (row[2]),    // Column C
-      quizzes: (row[3]),   // Column D
+      points: (row[3]),    // Column C
       accuracy: (row[6])   // Column G
     }))
     .filter(r => r.name); // remove blanks
@@ -41,7 +40,6 @@ function render(data) {
         <th>Rank</th>
         <th>Name</th>
         <th>Points</th>
-        <th>Quizzes</th>
         <th>Accuracy</th>
       </tr>
 
@@ -50,7 +48,6 @@ function render(data) {
           <td>${r.position}</td>
           <td>${r.name}</td>
           <td>${r.points}</td>
-          <td>${r.quizzes}</td>
           <td>${r.accuracy}</td>
         </tr>
       `).join("")}
